@@ -1,7 +1,8 @@
 import "./App.css";
 import useLocalStorage from "./hooks/useLocalStorage.jsx";
 import TransactionForm from "./components/TrasactionForm.jsx";
-import TransactionList from "./components/TransactionList.jsx"
+import TransactionList from "./components/TransactionList.jsx";
+import Summary from "./components/Summary.jsx"
 
 function App() {
   const [transactions, setTransactions] = useLocalStorage("transactions", []);
@@ -18,6 +19,7 @@ function App() {
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h1 className="text-3xl font-bold text-blue-600">Expense Tracker</h1>
+      <Summary transactions={transactions} />
       <TransactionForm onAddTransaction={addTransaction} />
       <TransactionList transactions={transactions} onDelete={deleteTransaction}/>
     </div>
