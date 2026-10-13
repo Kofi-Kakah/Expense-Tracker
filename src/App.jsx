@@ -6,6 +6,7 @@ import TransactionList from "./components/TransactionList.jsx";
 import Summary from "./components/Summary.jsx"
 import Filters from "./components/Filter.jsx"
 import Charts from "./components/Charts.jsx"
+import MonthlyTotals from "./components/MontlyTotals.jsx"
 
 function App() {
   const [transactions, setTransactions] = useLocalStorage("transactions", []);
@@ -44,6 +45,7 @@ function App() {
       <h1 className="text-3xl font-bold text-blue-600">Expense Tracker</h1>
       <Summary transactions={transactions} />
       <Charts transactions={transactions}/>
+      <MonthlyTotals transactions={transactions}/>
       <TransactionForm onAddTransaction={addTransaction} editing={editing} onUpdate={updatedTransaction} onCancel={() => setEditing(null)}/>
       <Filters filters={filters} onChange={setFilters}/>
       <TransactionList transactions={filteredTransactions} onDelete={deleteTransaction} onEdit={setEditing}/>
