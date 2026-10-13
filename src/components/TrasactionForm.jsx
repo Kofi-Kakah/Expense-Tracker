@@ -50,7 +50,7 @@ export default function TransactionForm({ onAddTransaction, editing, onUpdate, o
     return (
         <form onSubmit={handleSubmit} className="mt-6 grid gap-3 rounded-lg border p-4">
             <input type="text" value={description} id="" className="rounded border p-2" placeholder="Title/Description (eg: Lunch)" onChange={(e) => setDescription(e.target.value)} />
-            <input className="rounded border p-2" type="number" placeholder="Amoount" value={amount} onChange={(e) => setAmount(e.target.value)}/>
+            <input className="rounded border p-2" type="number" placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)}/>
 
             <div className="flex gap-3">
                 <select className="flex-1 rounded border p-2" value={type} onChange={(e) => setType(e.target.value)}>
