@@ -5,6 +5,7 @@ import TransactionForm from "./components/TrasactionForm.jsx";
 import TransactionList from "./components/TransactionList.jsx";
 import Summary from "./components/Summary.jsx"
 import Filters from "./components/Filter.jsx"
+import Charts from "./components/Charts.jsx"
 
 function App() {
   const [transactions, setTransactions] = useLocalStorage("transactions", []);
@@ -30,14 +31,22 @@ function App() {
     return matchesCategory && matchesSearch && matchesType
   })
 
+  const [editing, setEditing] = useState(null)
+
+  const updatedTransaction = (updated) => {
+    setTransactions(transactions.map((t) => (t.id === updated.id ? updated : t)))
+    setEditing(null)
+  }
+
 
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h1 className="text-3xl font-bold text-blue-600">Expense Tracker</h1>
       <Summary transactions={transactions} />
-      <TransactionForm onAddTransaction={addTransaction} />
+      <Charts transactions={transactions}/>
+      <TransactionForm onAddTransaction={addTransaction} editing={editing} onUpdate={updatedTransaction} onCancel={() => setEditing(null)}/>
       <Filters filters={filters} onChange={setFilters}/>
-      <TransactionList transactions={filteredTransactions} onDelete={deleteTransaction} />
+      <TransactionList transactions={filteredTransactions} onDelete={deleteTransaction} onEdit={setEditing}/>
     </div>
   );
 }

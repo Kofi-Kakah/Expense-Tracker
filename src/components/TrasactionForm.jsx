@@ -1,16 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const categories = ['Food', 'Transportation', 'Entertainment', 'Bills', 'Shopping', 'Salary', 'Other'];
 
-export default function TransactionForm({ onAddTransaction }) {
+export default function TransactionForm({ onAddTransaction, editing, onUpdate, onCancel }) {
+
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [type, setType] = useState('expense');
   const [category, setCategory] = useState('Food');
 
+  useEffect(() => {
+    if (editing) {
+        setDescription(editing.title)
+        setAmount(String(editing.amount))
+        setType(editing.type)
+        setCategory(editing.category)
+    }
+  },[editing])
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if(!description.trim() || !amount ) return
+
+    if (editing) {
+        onUpdate({
+            ...editing,
+            title: description.trim(),
+            amount: parseFloat(amount),
+            type,
+            category,
+        })
+        setDescription('')
+        setAmount('')
+        return
+    }
 
     onAddTransaction({
         title: description.trim(),
@@ -42,8 +65,17 @@ export default function TransactionForm({ onAddTransaction }) {
                 </select>
             </div>
             <button className="rounded bg-blue-600 p-2 font-semibold text-white hover:bg-blue-700">
-                Add Transaction
+                {editing ? 'Update Transaction' : 'Add Transaction'}
             </button>
+            {editing && (
+                <button type="button" onClick={() => {
+                  onCancel()
+                  setDescription('')
+                  setAmount('')
+                }} className="rounded border p-2">
+                    Cancel
+                </button>
+            )}
         </form>
     )
 

@@ -1,4 +1,4 @@
-export default function TransactionList ({transactions, onDelete}) {
+export default function TransactionList ({transactions, onDelete, onEdit}) {
     if (transactions.length === 0) {
         return <p className="mt-6 text-gray-500">No transactions yet.</p>
     }
@@ -16,6 +16,9 @@ export default function TransactionList ({transactions, onDelete}) {
                         <span className={t.type === "income" ? "font-semibold text-green-600" : "font-semibold text-red-600"}>
                             {t.type === "income" ? "+" : "-"}{t.amount}
                         </span>
+                        <button onClick={() => onEdit(t)} className="text-sm text-blue-500 hover:underline">
+                            Edit
+                        </button>
                         <button onClick={() => onDelete(t.id)} className="text-sm text-red-500 hover:underline">
                             Delete
                         </button>
